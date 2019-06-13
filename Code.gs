@@ -4,7 +4,7 @@
 ==============================================================================================================================================*/
 
 //======IMPORTANT====== TBA Auth-Key (generated from https://www.thebluealliance.com/account) ======IMPORTANT======\\
-var auth_key = "wFdmi8xz1hvQyHoXQ6zPuQDCmhWQimGG6Va4gXevqaSO3gpJG0pc2jJ5utipGlDd";
+var auth_key = ""; // PASTE HERE BETWEEN QUOTES!!!
 
 
 // FUNCTIONS RETURNING TEAM INFORMATION AT A SPECIFIC EVENT (number, name, location, etc..)
