@@ -16,4 +16,4 @@ STEP 2 - Create your TBA Auth Key
 3. If you're not already logged in, log in or register (afterwards you should be on https://www.thebluealliance.com/account)
 4. Scroll down to "Read API Keys", enter a name for your key in the Description box (ex: "My Google Sheets app!"), and click "Add New Key"
 5. Copy your new key that appears below
-6. Go to your open Google Script editor from STEP 1, and near the top you will see: 'var auth_key = "" '. Paste your API key inside the quotes, and click/press save.
+6. Go to your open Google Script editor from STEP 1, and near the top on line 7 you will see: 'var auth_key = "" '. Paste your API key inside the quotes, and click/press save.
