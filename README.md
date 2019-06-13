@@ -18,7 +18,7 @@ STEP 2 - Create your TBA Auth Key
 5. Copy your new key that appears below
 6. Go to your open Google Script editor from STEP 1, and near the top on line 7 you will see: 'var auth_key = "" '. Paste your API key inside the quotes, and click/press save.
 
-
+How to use this in Google Sheets once you've completed set-up: https://www.chiefdelphi.com/t/the-blue-alliance-api-google-sheets-addon/359332
 
 
 
