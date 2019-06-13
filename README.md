@@ -2,12 +2,14 @@
 A google script file that allows you to pull information from The Blue Alliance's V3 API using simple functions inside of Google Sheets.
 
 How to install:
+
 STEP 1 - Create a new google sheets doc and load in the google script
 1. Go to your google drive and create a new blank google sheets (alternatively, open an existing one you'd like to start using these features in)
 2. Once you're looking at the google sheet, click "Tools" on the navbar, then "Script Editor"
 3. On the new tab that has opened up, paste all of the code that is in the Code.gs file in this GitHub repository
 4. Click save (or CTRL + S) and give the project a name (Ex: "TBA Sheet Puller")
 5. Keep this tab open and proceed to STEP 2 (skip to part 6 if you already have a TBA API Read Auth Key)
+
 STEP 2 - Create your TBA Auth Key
 1. Go to https://www.thebluealliance.com/
 2. Under the "More" item on the top navigation bar, press Account
