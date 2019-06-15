@@ -4,7 +4,9 @@
 ==============================================================================================================================================*/
 
 //======IMPORTANT====== TBA Auth-Key (generated from https://www.thebluealliance.com/account) ======IMPORTANT======\\
-var auth_key = ""; // PASTE HERE BETWEEN QUOTES!!!
+var auth_key = "";
+
+
 
 
 // FUNCTIONS RETURNING TEAM INFORMATION AT A SPECIFIC EVENT (number, name, location, etc..)
@@ -33,6 +35,10 @@ function tbaEventMatches(eventcode){
   return ImportJSONForEventMatches("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/matches/simple?X-TBA-Auth-Key=" + auth_key);
 }
 
+function tbaEventRankings(eventcode){
+  return ImportJSONForEventRankings("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/rankings?X-TBA-Auth-Key=" + auth_key);
+}
+
 
 // HELPER FUNCTIONS I BUILT IN --- you can ignore
 function ImportJSONForStatus(url, query, options) { // ignore this, used for an above function
@@ -43,6 +49,7 @@ function ImportJSONForStatus(url, query, options) { // ignore this, used for an 
   
   return parseJSONObject_(object, query, "noHeaders", includeFunc, transformFunc);
 }
+
 function ImportJSONForTeamsOnAlliance(url, alliance, query) { // ignore this, used for an above function
   var includeFunc = includeXPath_;
   var transformFunc = defaultTransform_;
@@ -55,6 +62,7 @@ function ImportJSONForTeamsOnAlliance(url, alliance, query) { // ignore this, us
   
   return parseJSONObject_(newObject, query, "noHeaders", includeFunc, transformFunc);
 }
+
 function ImportJSONForTeamsInMatch(url, query) { // ignore this, used for an above function
   var includeFunc = includeXPath_;
   var transformFunc = defaultTransform_;
@@ -71,6 +79,7 @@ function ImportJSONForTeamsInMatch(url, query) { // ignore this, used for an abo
   
   return parseJSONObject_(newObject, query, "noHeaders", includeFunc, transformFunc);
 }
+
 function ImportJSONForEventMatches(url, query, options) { // ignore this, used for an above function
   var als = ["red", "blue"];
   var includeFunc = includeXPath_;
@@ -105,6 +114,28 @@ function ImportJSONForEventMatches(url, query, options) { // ignore this, used f
   }
   return parseJSONObject_(newObject, query, "", includeFunc, transformFunc);
 }
+
+function ImportJSONForEventRankings(url, query, options){
+  var includeFunc = includeXPath_;
+  var transformFunc = defaultTransform_;
+  var jsondata = UrlFetchApp.fetch(url);
+  var object   = JSON.parse(jsondata.getContentText()).rankings;
+  var newObject = [];
+  for(var i = 0; i < object.length; i++){
+    var teamObject = {};
+    teamObject.rank = object[i].rank;
+    teamObject.team_num = object[i].team_key.replace("frc", "");
+    teamObject.total_rp = object[i].extra_stats[0];
+    teamObject.matches_played = object[i].matches_played;
+    teamObject.wins = object[i].record.wins == 0 ? "0" : object[i].record.wins;
+    teamObject.losses = object[i].record.losses == 0 ? "0" : object[i].record.losses;
+    teamObject.ties = object[i].record.ties == 0 ? "0" : object[i].record.ties;
+    teamObject.WLT = teamObject.wins + "-" + teamObject.losses + "-" + teamObject.ties;
+    newObject.push(teamObject);
+  }
+  return parseJSONObject_(newObject, query, "", includeFunc, transformFunc);
+}
+
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
