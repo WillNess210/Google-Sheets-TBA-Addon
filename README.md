@@ -21,12 +21,12 @@ STEP 2 - Create your TBA Auth Key
 Examples located here: https://www.chiefdelphi.com/t/the-blue-alliance-api-google-sheets-addon/359332
 
 Working functions:
-=tbaTeamsAtEvent(eventcode)
-=tbaTeamsAtEventSimple(eventcode)
-=tbaTeamStatus(eventcode, teamnum)
-=tbaTeamsOnAlliance(eventcode, matchcode, alliance)
-=tbaTeamsInMatch(eventcode,matchcode)
-=tbaEventMatches(eventcode)
-=tbaEventRankings(eventcode)
+=tbaTeamsAtEvent(eventcode)  
+=tbaTeamsAtEventSimple(eventcode)  
+=tbaTeamStatus(eventcode, teamnum)  
+=tbaTeamsOnAlliance(eventcode, matchcode, alliance)  
+=tbaTeamsInMatch(eventcode,matchcode)  
+=tbaEventMatches(eventcode)  
+=tbaEventRankings(eventcode)  
 
 # Underlying API / JSON Importing was created by Trevor Lohrbeer.
