@@ -4,7 +4,7 @@
 ==============================================================================================================================================*/
 
 //======IMPORTANT====== TBA Auth-Key (generated from https://www.thebluealliance.com/account) ======IMPORTANT======\\
-var auth_key = "";
+var auth_key = "wFdmi8xz1hvQyHoXQ6zPuQDCmhWQimGG6Va4gXevqaSO3gpJG0pc2jJ5utipGlDd";
 
 
 
@@ -35,10 +35,20 @@ function tbaEventMatches(eventcode){
   return ImportJSONForEventMatches("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/matches/simple?X-TBA-Auth-Key=" + auth_key);
 }
 
+// FUNCTION RETURNING ALL TEAMS AND THEIR RANKINGS AT AN EVENT
 function tbaEventRankings(eventcode){
   return ImportJSONForEventRankings("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/rankings?X-TBA-Auth-Key=" + auth_key);
 }
 
+// FUNCTION RETURNING PLAYOFF ALLIANCES AT AN EVENT - TODO add docs & publish
+function tbaPlayoffAlliances(eventcode){
+  return ImportJSONForPlayoffAlliances("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/alliances?X-TBA-Auth-Key=" + auth_key);
+}
+
+// FUNCTION RETURNING PLAYOFF ALLIANCES & INFO AT EVENT
+function tbaPlayoffInfo(eventcode){
+  return ImportJSONForPlayoffInfo("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/alliances?X-TBA-Auth-Key=" + auth_key);
+}
 
 // HELPER FUNCTIONS I BUILT IN --- you can ignore
 function ImportJSONForStatus(url, query, options) { // ignore this, used for an above function
@@ -132,6 +142,47 @@ function ImportJSONForEventRankings(url, query, options){
     teamObject.ties = object[i].record.ties == 0 ? "0" : object[i].record.ties;
     teamObject.WLT = teamObject.wins + "-" + teamObject.losses + "-" + teamObject.ties;
     newObject.push(teamObject);
+  }
+  return parseJSONObject_(newObject, query, "", includeFunc, transformFunc);
+}
+
+function ImportJSONForPlayoffAlliances(url, query, options){
+  var includeFunc = includeXPath_;
+  var transformFunc = defaultTransform_;
+  var jsondata = UrlFetchApp.fetch(url);
+  var object   = JSON.parse(jsondata.getContentText());
+  var newObject = [];
+  for(var i = 0; i < object.length; i++){
+    var allianceData = object[i];
+    var newAllianceData = {};
+    newAllianceData.alliance_number = allianceData.name.split(" ")[1];
+    newAllianceData.bot_1 = allianceData.picks[0].replace("frc", "");
+    newAllianceData.bot_2 = allianceData.picks[1].replace("frc", "");
+    newAllianceData.bot_3 = allianceData.picks[2].replace("frc", "");
+    newObject.push(newAllianceData);
+  }
+  return parseJSONObject_(newObject, query, "", includeFunc, transformFunc);
+}
+
+function ImportJSONForPlayoffInfo(url, query, options){
+  var includeFunc = includeXPath_;
+  var transformFunc = defaultTransform_;
+  var jsondata = UrlFetchApp.fetch(url);
+  var object   = JSON.parse(jsondata.getContentText());
+  var newObject = [];
+  for(var i = 0; i < object.length; i++){
+    var allianceData = object[i];
+    var newAllianceData = {};
+    newAllianceData.alliance_number = allianceData.name.split(" ")[1];
+    newAllianceData.bot_1 = allianceData.picks[0].replace("frc", "");
+    newAllianceData.bot_2 = allianceData.picks[1].replace("frc", "");
+    newAllianceData.bot_3 = allianceData.picks[2].replace("frc", "");
+    newAllianceData.status = allianceData.status.status;
+    newAllianceData.level_of_play = allianceData.status.level;
+    newAllianceData.current_wins = allianceData.status.current_level_record.wins > 0 ? allianceData.status.current_level_record.wins : "0";
+    newAllianceData.current_losses = allianceData.status.current_level_record.losses > 0 ? allianceData.status.current_level_record.losses : "0";
+    newAllianceData.current_ties = allianceData.status.current_level_record.ties > 0 ? allianceData.status.current_level_record.ties : "0";
+    newObject.push(newAllianceData);
   }
   return parseJSONObject_(newObject, query, "", includeFunc, transformFunc);
 }
