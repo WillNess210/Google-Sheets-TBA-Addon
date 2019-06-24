@@ -29,5 +29,6 @@ Examples located here: https://www.chiefdelphi.com/t/the-blue-alliance-api-googl
 =tbaEventMatches(eventcode)  
 =tbaEventRankings(eventcode)  
 =tbaPlayoffInfo(eventcode)
+=tbaPlayoffAlliances(eventcode)
 
 ## Underlying API / JSON Importing was created by Trevor Lohrbeer.
