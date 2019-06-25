@@ -7,8 +7,6 @@
 var auth_key = "";
 
 
-
-
 // FUNCTIONS RETURNING TEAM INFORMATION AT A SPECIFIC EVENT (number, name, location, etc..)
 function tbaTeamsAtEvent(eventcode){
   return ImportJSON("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/teams?X-TBA-Auth-Key=" + auth_key);
@@ -40,7 +38,7 @@ function tbaEventRankings(eventcode){
   return ImportJSONForEventRankings("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/rankings?X-TBA-Auth-Key=" + auth_key);
 }
 
-// FUNCTION RETURNING PLAYOFF ALLIANCES AT AN EVENT - TODO add docs & publish
+// FUNCTION RETURNING PLAYOFF ALLIANCES AT AN EVENT
 function tbaPlayoffAlliances(eventcode){
   return ImportJSONForPlayoffAlliances("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/alliances?X-TBA-Auth-Key=" + auth_key);
 }
@@ -159,6 +157,21 @@ function ImportJSONForPlayoffAlliances(url, query, options){
     newAllianceData.bot_1 = allianceData.picks[0].replace("frc", "");
     newAllianceData.bot_2 = allianceData.picks[1].replace("frc", "");
     newAllianceData.bot_3 = allianceData.picks[2].replace("frc", "");
+    if(allianceData.picks.length > 3){
+      newAllianceData.bot_4 = allianceData.picks[3].replace("frc", "");
+    }else if(allianceData.backup != null){
+      newAllianceData.backup = allianceData.backup["in"].replace("frc", "");
+      var outTeam = allianceData.backup.out.replace("frc", "");
+      if(outTeam == newAllianceData.bot_1){
+        newAllianceData.bot_1 += "*";
+      }else if(outTeam == newAllianceData.bot_2){
+        newAllianceData.bot_2 += "*";
+      }else if(outTeam == newAllianceData.bot_3){
+        newAllianceData.bot_3 += "*";
+      }
+    }else{
+      newAllianceData.backup = " ";
+    }
     newObject.push(newAllianceData);
   }
   return parseJSONObject_(newObject, query, "", includeFunc, transformFunc);
@@ -177,6 +190,21 @@ function ImportJSONForPlayoffInfo(url, query, options){
     newAllianceData.bot_1 = allianceData.picks[0].replace("frc", "");
     newAllianceData.bot_2 = allianceData.picks[1].replace("frc", "");
     newAllianceData.bot_3 = allianceData.picks[2].replace("frc", "");
+    if(allianceData.picks.length > 3){
+      newAllianceData.bot_4 = allianceData.picks[3].replace("frc", "");
+    }else if(allianceData.backup != null){
+      newAllianceData.backup = allianceData.backup["in"].replace("frc", "");
+      var outTeam = allianceData.backup.out.replace("frc", "");
+      if(outTeam == newAllianceData.bot_1){
+        newAllianceData.bot_1 += "*";
+      }else if(outTeam == newAllianceData.bot_2){
+        newAllianceData.bot_2 += "*";
+      }else if(outTeam == newAllianceData.bot_3){
+        newAllianceData.bot_3 += "*";
+      }
+    }else{
+      newAllianceData.backup = " ";
+    }
     newAllianceData.status = allianceData.status.status;
     newAllianceData.level_of_play = allianceData.status.level;
     newAllianceData.current_wins = allianceData.status.current_level_record.wins > 0 ? allianceData.status.current_level_record.wins : "0";
