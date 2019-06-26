@@ -150,15 +150,29 @@ function ImportJSONForPlayoffAlliances(url, query, options){
   var jsondata = UrlFetchApp.fetch(url);
   var object   = JSON.parse(jsondata.getContentText());
   var newObject = [];
+  var fourBots = false;
+  for(var i = 0; i < object.length; i++){
+    if(object[i].picks.length > 3){
+      fourBots = true;
+    }
+  }
   for(var i = 0; i < object.length; i++){
     var allianceData = object[i];
     var newAllianceData = {};
-    newAllianceData.alliance_number = allianceData.name.split(" ")[1];
+    if(allianceData.name != null){
+      newAllianceData.alliance_number = allianceData.name.split(" ")[1];
+    }else{
+      newAllianceData.alliance_number = (i + 1) + "";
+    }
     newAllianceData.bot_1 = allianceData.picks[0].replace("frc", "");
     newAllianceData.bot_2 = allianceData.picks[1].replace("frc", "");
     newAllianceData.bot_3 = allianceData.picks[2].replace("frc", "");
-    if(allianceData.picks.length > 3){
-      newAllianceData.bot_4 = allianceData.picks[3].replace("frc", "");
+    if(fourBots){
+      if(allianceData.picks[3] != null){
+        newAllianceData.bot_4 = allianceData.picks[3].replace("frc", "");
+      }else{
+        newAllianceData.bot_4 = " ";
+      }
     }else if(allianceData.backup != null){
       newAllianceData.backup = allianceData.backup["in"].replace("frc", "");
       var outTeam = allianceData.backup.out.replace("frc", "");
@@ -183,15 +197,29 @@ function ImportJSONForPlayoffInfo(url, query, options){
   var jsondata = UrlFetchApp.fetch(url);
   var object   = JSON.parse(jsondata.getContentText());
   var newObject = [];
+  var fourBots = false;
+  for(var i = 0; i < object.length; i++){
+    if(object[i].picks.length > 3){
+      fourBots = true;
+    }
+  }
   for(var i = 0; i < object.length; i++){
     var allianceData = object[i];
     var newAllianceData = {};
-    newAllianceData.alliance_number = allianceData.name.split(" ")[1];
+    if(allianceData.name != null){
+      newAllianceData.alliance_number = allianceData.name.split(" ")[1];
+    }else{
+      newAllianceData.alliance_number = (i + 1) + "";
+    }
     newAllianceData.bot_1 = allianceData.picks[0].replace("frc", "");
     newAllianceData.bot_2 = allianceData.picks[1].replace("frc", "");
     newAllianceData.bot_3 = allianceData.picks[2].replace("frc", "");
-    if(allianceData.picks.length > 3){
-      newAllianceData.bot_4 = allianceData.picks[3].replace("frc", "");
+    if(fourBots){
+      if(allianceData.picks[3] != null){
+        newAllianceData.bot_4 = allianceData.picks[3].replace("frc", "");
+      }else{
+        newAllianceData.bot_4 = " ";
+      }
     }else if(allianceData.backup != null){
       newAllianceData.backup = allianceData.backup["in"].replace("frc", "");
       var outTeam = allianceData.backup.out.replace("frc", "");
