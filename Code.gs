@@ -9,43 +9,43 @@ var auth_key = "";
 
 // FUNCTIONS RETURNING TEAM INFORMATION AT A SPECIFIC EVENT (number, name, location, etc..)
 function tbaTeamsAtEvent(eventcode){
-  return ImportJSON("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/teams?X-TBA-Auth-Key=" + auth_key);
+  return ImportJSON("https://www.thebluealliance.com/api/v3/event/" + eventcode.toLowerCase() + "/teams?X-TBA-Auth-Key=" + auth_key);
 }
 function tbaTeamsAtEventSimple(eventcode){
-  return ImportJSON("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/teams/simple?X-TBA-Auth-Key=" + auth_key);
+  return ImportJSON("https://www.thebluealliance.com/api/v3/event/" + eventcode.toLowerCase() + "/teams/simple?X-TBA-Auth-Key=" + auth_key);
 }
 
 // FUNCTION RETURNING TEAM STATUS AT AN EVENT (playoff status, rank, W/L)
 function tbaTeamStatus(eventcode, teamnum){
-  return ImportJSONForStatus("https://www.thebluealliance.com/api/v3/team/frc" + teamnum + "/event/" + eventcode + "/status?X-TBA-Auth-Key=" + auth_key);
+  return ImportJSONForStatus("https://www.thebluealliance.com/api/v3/team/frc" + teamnum + "/event/" + eventcode.toLowerCase() + "/status?X-TBA-Auth-Key=" + auth_key);
 }
 
 // FUNCTION RETURNING TEAMS IN A MATCH (alliance should be red/blue)
 function tbaTeamsOnAlliance(eventcode, matchcode, alliance){ // A1 A2 A3
-  return ImportJSONForTeamsOnAlliance("https://www.thebluealliance.com/api/v3/match/" + eventcode + "_" + matchcode + "/simple?X-TBA-Auth-Key=" + auth_key, alliance);
+  return ImportJSONForTeamsOnAlliance("https://www.thebluealliance.com/api/v3/match/" + eventcode.toLowerCase() + "_" + matchcode.toLowerCase() + "/simple?X-TBA-Auth-Key=" + auth_key, alliance.toLowerCase());
 }
 function tbaTeamsInMatch(eventcode, matchcode){ // R1 R2 R3 B1 B2 B3
-  return ImportJSONForTeamsInMatch("https://www.thebluealliance.com/api/v3/match/" + eventcode + "_" + matchcode + "/simple?X-TBA-Auth-Key=" + auth_key);
+  return ImportJSONForTeamsInMatch("https://www.thebluealliance.com/api/v3/match/" + eventcode.toLowerCase() + "_" + matchcode.toLowerCase() + "/simple?X-TBA-Auth-Key=" + auth_key);
 }
 
 // FUNCTION RETURNING ALL MATCH INFORMATION AT AN EVENT
 function tbaEventMatches(eventcode){
-  return ImportJSONForEventMatches("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/matches/simple?X-TBA-Auth-Key=" + auth_key);
+  return ImportJSONForEventMatches("https://www.thebluealliance.com/api/v3/event/" + eventcode.toLowerCase() + "/matches/simple?X-TBA-Auth-Key=" + auth_key);
 }
 
 // FUNCTION RETURNING ALL TEAMS AND THEIR RANKINGS AT AN EVENT
 function tbaEventRankings(eventcode){
-  return ImportJSONForEventRankings("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/rankings?X-TBA-Auth-Key=" + auth_key);
+  return ImportJSONForEventRankings("https://www.thebluealliance.com/api/v3/event/" + eventcode.toLowerCase() + "/rankings?X-TBA-Auth-Key=" + auth_key);
 }
 
 // FUNCTION RETURNING PLAYOFF ALLIANCES AT AN EVENT
 function tbaPlayoffAlliances(eventcode){
-  return ImportJSONForPlayoffAlliances("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/alliances?X-TBA-Auth-Key=" + auth_key);
+  return ImportJSONForPlayoffAlliances("https://www.thebluealliance.com/api/v3/event/" + eventcode.toLowerCase() + "/alliances?X-TBA-Auth-Key=" + auth_key);
 }
 
 // FUNCTION RETURNING PLAYOFF ALLIANCES & INFO AT EVENT
 function tbaPlayoffInfo(eventcode){
-  return ImportJSONForPlayoffInfo("https://www.thebluealliance.com/api/v3/event/" + eventcode + "/alliances?X-TBA-Auth-Key=" + auth_key);
+  return ImportJSONForPlayoffInfo("https://www.thebluealliance.com/api/v3/event/" + eventcode.toLowerCase() + "/alliances?X-TBA-Auth-Key=" + auth_key);
 }
 
 // HELPER FUNCTIONS I BUILT IN --- you can ignore
