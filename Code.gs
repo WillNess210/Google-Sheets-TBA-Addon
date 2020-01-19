@@ -48,13 +48,36 @@ function tbaPlayoffInfo(eventcode){
   return ImportJSONForPlayoffInfo("https://www.thebluealliance.com/api/v3/event/" + eventcode.toLowerCase() + "/alliances?X-TBA-Auth-Key=" + auth_key);
 }
 
+// FUNCTION RETURNING OPRS FOR EVENT
+function tbaEventOPRs(eventcode){
+  return ImportJSONForEventOPRs("https://www.thebluealliance.com/api/v3/event/" + eventcode.toLowerCase() + "/oprs?X-TBA-Auth-Key=" + auth_key);
+}
+
 // HELPER FUNCTIONS I BUILT IN --- you can ignore
+function ImportJSONForEventOPRs(url, query, options){
+  var includeFunc = includeXPath_;
+  var transformFunc = defaultTransform_;
+  var jsondata = UrlFetchApp.fetch(url);
+  var object   = JSON.parse(jsondata.getContentText());
+  var types = ["oprs", "dprs"];
+  var calltypes = ["OPR", "DPR"];
+  var newObject = [];
+  for(var teamkey in object[types[0]]){
+    var teamObject = {};
+    teamObject["Team Number"] = teamkey.replace("frc", "");
+    for(var i = 0; i < types.length; i++){
+      teamObject[calltypes[i]] = object[types[i]][teamkey];
+    }
+    newObject.push(teamObject);
+  }
+  return parseJSONObject_(newObject, query, "", includeFunc, transformFunc);
+}
+
 function ImportJSONForStatus(url, query, options) { // ignore this, used for an above function
   var includeFunc = includeXPath_;
   var transformFunc = defaultTransform_;
   var jsondata = UrlFetchApp.fetch(url);
   var object   = JSON.parse(jsondata.getContentText()).overall_status_str.replaceAll("<b>", "").replaceAll("</b>", "");
-  
   return parseJSONObject_(object, query, "noHeaders", includeFunc, transformFunc);
 }
 
