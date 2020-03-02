@@ -53,7 +53,33 @@ function tbaEventOPRs(eventcode){
   return ImportJSONForEventOPRs("https://www.thebluealliance.com/api/v3/event/" + eventcode.toLowerCase() + "/oprs?X-TBA-Auth-Key=" + auth_key);
 }
 
+function tbaMatchBreakdown(matchcode){
+  return ImportJSONForMatchBreakdown("https://www.thebluealliance.com/api/v3/match/" + matchcode.toLowerCase() + "?X-TBA-Auth-Key=" + auth_key);
+}
+function tbaMatchBreakdownHeaders(matchcode){
+  return ImportJSONForMatchBreakdownHeaders("https://www.thebluealliance.com/api/v3/match/" + matchcode.toLowerCase() + "?X-TBA-Auth-Key=" + auth_key);
+}
+
 // HELPER FUNCTIONS I BUILT IN --- you can ignore
+
+function ImportJSONForMatchBreakdown(url, query, options) { // ignore this, used for an above function
+  var includeFunc = includeXPath_;
+  var transformFunc = defaultTransform_;
+  var jsondata = UrlFetchApp.fetch(url);
+  var object   = JSON.parse(jsondata.getContentText()).score_breakdown;
+  var headersOrNot = "noHeaders"
+  return parseJSONObject_(object, query, headersOrNot, includeFunc, transformFunc);
+}
+
+function ImportJSONForMatchBreakdownHeaders(url, query, options) { // ignore this, used for an above function
+  var includeFunc = includeXPath_;
+  var transformFunc = defaultTransform_;
+  var jsondata = UrlFetchApp.fetch(url);
+  var object   = JSON.parse(jsondata.getContentText()).score_breakdown;
+  var headersOrNot = ""
+  return parseJSONObject_(object, query, headersOrNot, includeFunc, transformFunc);
+}
+
 function ImportJSONForEventOPRs(url, query, options){
   var includeFunc = includeXPath_;
   var transformFunc = defaultTransform_;
